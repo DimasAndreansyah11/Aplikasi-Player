@@ -12,21 +12,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
 
+        /* ==========================================
+           1. DEFAULT THEME (DARK / CYBERPUNK)
+           ========================================== */
         :root { --system-blue: #00eaff; --system-blue-dim: rgba(0, 234, 255, 0.1); --bg-dark: #050505; }
-        body {
-            font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #e2e8f0;
-            background-image: radial-gradient(circle at 50% 50%, #111827 0%, #000000 100%);
-            user-select: none; -webkit-tap-highlight-color: transparent;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #e2e8f0; background-image: radial-gradient(circle at 50% 50%, #111827 0%, #000000 100%); user-select: none; -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, .font-system { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
-
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #1e293b; }
@@ -51,9 +48,51 @@
         #sidebar { transition: transform 0.3s ease-in-out, width 0.3s ease-in-out; }
         .sidebar-content-wrapper { width: 18rem; transition: opacity 0.2s; }
         @media (min-width: 768px) { .md-collapsed { width: 0 !important; border-width: 0 !important; } .md-collapsed .sidebar-content-wrapper { opacity: 0; pointer-events: none; } }
+        canvas { max-width: 100%; height: auto !important; }
+        input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+
+        /* ==========================================
+           2. COZY RPG THEME (KONOSUBA STYLE)
+           ========================================== */
+        body.theme-konosuba { background: #FDF6E3 !important; color: #4E342E !important; font-family: 'Nunito', sans-serif !important; }
+        body.theme-konosuba h1, body.theme-konosuba h2, body.theme-konosuba h3, body.theme-konosuba .font-system, body.theme-konosuba .font-mono { font-family: 'Fredoka One', cursive !important; letter-spacing: 0.5px !important; color: #3E2723 !important; text-shadow: none !important; }
+        body.theme-konosuba .bg-\[\#0a0a0a\], body.theme-konosuba .bg-\[\#111\], body.theme-konosuba nav, body.theme-konosuba header { background-color: #FFFDF7 !important; border: 3px solid #5D4037 !important; border-radius: 16px !important; box-shadow: 4px 4px 0px #D7CCC8 !important; backdrop-filter: none !important; margin: 6px !important; }
+        body.theme-konosuba nav, body.theme-konosuba header { margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; border-bottom: 3px solid #5D4037 !important;}
+        body.theme-konosuba nav { border-right: 3px solid #5D4037 !important; }
+        body.theme-konosuba .text-white { color: #3E2723 !important; }
+        body.theme-konosuba .text-slate-400, body.theme-konosuba .text-slate-500 { color: #8D6E63 !important; font-weight: 700 !important; }
+        body.theme-konosuba .text-blue-500, body.theme-konosuba .text-blue-400, body.theme-konosuba .text-purple-400, body.theme-konosuba .text-amber-500 { color: #5D4037 !important; } 
+        body.theme-konosuba .btn-system-active { background: #FFF3E0 !important; border-left: none !important; border: 3px solid #FFB300 !important; border-radius: 12px !important; color: #E65100 !important; text-shadow: none !important; box-shadow: 3px 3px 0px #FFB300 !important; }
+        body.theme-konosuba button.bg-blue-900\/20, body.theme-konosuba button.bg-amber-900\/20, body.theme-konosuba button.bg-purple-900\/20 { background-color: #2980B9 !important; color: #FFFFFF !important; border: 3px solid #1A5276 !important; box-shadow: 0px 4px 0px #1A5276 !important; border-radius: 12px !important; text-shadow: 1px 1px 0px rgba(0,0,0,0.2) !important; transition: all 0.1s ease !important; }
+        body.theme-konosuba button.bg-blue-900\/20:active, body.theme-konosuba button.bg-amber-900\/20:active, body.theme-konosuba button.bg-purple-900\/20:active { transform: translateY(4px) !important; box-shadow: 0px 0px 0px #1A5276 !important; }
+        body.theme-konosuba button.bg-blue-900\/20 i, body.theme-konosuba button.bg-amber-900\/20 i, body.theme-konosuba button.bg-purple-900\/20 i { color: #FFFFFF !important; }
+        body.theme-konosuba button.bg-\[\#111\] { background-color: #F5F5F5 !important; border: 2px solid #BCAAA4 !important; border-radius: 12px !important; box-shadow: 2px 2px 0px #D7CCC8 !important; }
+        body.theme-konosuba #activity-list > div, body.theme-konosuba #quest-list-container > div { background-color: #FFFFFF !important; border: 2px solid #5D4037 !important; border-radius: 12px !important; box-shadow: 2px 2px 0px #D7CCC8 !important; margin-bottom: 8px !important; }
+        body.theme-konosuba .act-positive { border-left: 6px solid #4CAF50 !important; } 
+        body.theme-konosuba .act-negative { border-left: 6px solid #E53935 !important; background-color: #FFEBEE !important; } 
+        body.theme-konosuba input, body.theme-konosuba select { background-color: #FFFFFF !important; color: #4E342E !important; border: 2px solid #BCAAA4 !important; border-radius: 8px !important; font-family: 'Nunito', sans-serif !important; font-weight: bold !important; }
+        body.theme-konosuba input[type="time"]::-webkit-calendar-picker-indicator { filter: none; }
+        body.theme-konosuba .w-full.bg-\[\#111\].h-1\.5, body.theme-konosuba .w-full.bg-\[\#111\].h-2, body.theme-konosuba .w-full.bg-\[\#222\].h-1\.5 { background-color: #EFEBE9 !important; border: 2px solid #5D4037 !important; border-radius: 12px !important; height: 16px !important; overflow: hidden !important; }
+        body.theme-konosuba .system-progress { background: #2980B9 !important; box-shadow: none !important; border-radius: 0 !important; border-right: 2px solid #1A5276 !important;}
+        body.theme-konosuba .hp-progress { background: #E53935 !important; box-shadow: none !important; border-radius: 0 !important; border-right: 2px solid #B71C1C !important;}
+        body.theme-konosuba .modal-backdrop { background-color: rgba(253, 246, 227, 0.85) !important; }
+        body.theme-konosuba #auth-overlay { background: #FDF6E3 !important; }
+        body.theme-konosuba .animate-pulse { animation: none !important; }
+        body.theme-konosuba .damage-anim { animation: none !important; border: 3px solid #E53935 !important; background-color: #FFEBEE !important; }
+
+        /* Custom Popup Image Constraint */
+        #char-popup-img { object-fit: contain; max-height: 180px; }
     </style>
 </head>
 <body class="h-screen w-screen flex overflow-hidden relative">
+
+    <div id="char-popup" class="fixed bottom-[-100%] right-4 md:right-10 z-[200] transition-all duration-500 ease-out flex items-end drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] pointer-events-none">
+        <div class="bg-white border-4 border-[#5D4037] rounded-2xl p-3 md:p-4 mb-16 mr-[-20px] relative z-10 max-w-[180px] md:max-w-[220px]">
+            <div class="absolute -bottom-3 right-8 w-6 h-6 bg-white border-b-4 border-r-4 border-[#5D4037] transform rotate-45"></div>
+            <p id="char-popup-msg" class="text-[10px] md:text-sm font-bold text-[#4E342E] font-system leading-snug">...</p>
+        </div>
+        <img id="char-popup-img" src="" class="w-28 md:w-40 h-auto" alt="Character">
+    </div>
 
     <div id="auth-overlay" class="fixed inset-0 modal-backdrop z-[9999] flex flex-col items-center justify-center p-4">
         <div class="text-center mb-8">
@@ -62,26 +101,13 @@
             </h1>
             <p class="text-xs text-blue-400 mt-4 font-mono uppercase tracking-[0.4em]">Player Authorization Required</p>
         </div>
-
         <div class="bg-[#0a0a0a] border border-blue-500 shadow-[0_0_30px_rgba(0,234,255,0.2)] w-full max-w-sm p-8 space-y-6">
-            <div>
-                <label class="block text-[10px] font-mono text-slate-500 uppercase mb-2">Player ID (Email)</label>
-                <input type="email" id="auth-email" class="w-full bg-black border border-[#333] p-3 text-white text-xs focus:border-blue-500 focus:outline-none font-mono" placeholder="player@system.net">
-            </div>
-            <div>
-                <label class="block text-[10px] font-mono text-slate-500 uppercase mb-2">Passcode</label>
-                <input type="password" id="auth-pass" class="w-full bg-black border border-[#333] p-3 text-white text-xs focus:border-blue-500 focus:outline-none font-mono" placeholder="••••••••">
-            </div>
-            
+            <div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-2">Player ID (Email)</label><input type="email" id="auth-email" class="w-full bg-black border border-[#333] p-3 text-white text-xs focus:border-blue-500 focus:outline-none font-mono" placeholder="player@system.net"></div>
+            <div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-2">Passcode</label><input type="password" id="auth-pass" class="w-full bg-black border border-[#333] p-3 text-white text-xs focus:border-blue-500 focus:outline-none font-mono" placeholder="••••••••"></div>
             <div id="auth-error" class="text-red-500 text-[10px] font-mono text-center hidden">Error message here</div>
-
             <div class="flex flex-col gap-3 pt-4 border-t border-[#222]">
-                <button onclick="handleLogin()" id="btn-login" class="w-full bg-blue-900/20 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black py-3 text-xs font-bold font-mono uppercase tracking-widest transition">
-                    [ CONNECT / LOGIN ]
-                </button>
-                <button onclick="handleRegister()" id="btn-register" class="w-full border border-[#333] text-slate-400 hover:border-slate-400 py-3 text-[10px] font-bold font-mono uppercase tracking-widest transition">
-                    INITIALIZE NEW PLAYER
-                </button>
+                <button onclick="handleLogin()" id="btn-login" class="w-full bg-blue-900/20 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black py-3 text-xs font-bold font-mono uppercase tracking-widest transition">[ CONNECT / LOGIN ]</button>
+                <button onclick="handleRegister()" id="btn-register" class="w-full border border-[#333] text-slate-400 hover:border-slate-400 py-3 text-[10px] font-bold font-mono uppercase tracking-widest transition">INITIALIZE NEW PLAYER</button>
             </div>
         </div>
     </div>
@@ -92,46 +118,23 @@
         <div class="sidebar-content-wrapper h-full flex flex-col justify-between">
             <div class="p-6 md:p-8 border-b border-[#222]">
                 <div class="flex justify-between items-center">
-                    <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center gap-3" style="text-shadow: 0 0 10px rgba(255,255,255,0.3);">
-                        <span class="text-blue-500 animate-pulse">❖</span> SYSTEM
-                    </h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wider flex items-center gap-3" style="text-shadow: 0 0 10px rgba(255,255,255,0.3);"><span class="text-blue-500 animate-pulse"><i class="fa-solid fa-scroll"></i></span> SYSTEM</h1>
                     <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
                 </div>
-                <p class="text-[10px] text-blue-400 mt-2 font-mono uppercase tracking-[0.2em] flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981] animate-pulse"></span> Cloud Sync Active
-                </p>
+                <p class="text-[10px] text-blue-400 mt-2 font-mono uppercase tracking-[0.2em] flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981] animate-pulse"></span> Cloud Sync Active</p>
             </div>
-
             <div class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
-                <button onclick="switchTab('ledger')" id="nav-ledger" class="btn-system-active w-full text-left px-4 py-4 rounded-sm font-system font-bold text-sm transition flex items-center gap-4 group">
-                    <i class="fa-solid fa-list-check group-hover:text-blue-400 transition w-5 text-center"></i> LEDGER
-                </button>
-                <button onclick="switchTab('analytics')" id="nav-analytics" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group">
-                    <i class="fa-solid fa-chart-pie group-hover:text-blue-400 transition w-5 text-center"></i> ANALYTICS
-                </button>
-                <button onclick="switchTab('store')" id="nav-store" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group">
-                    <i class="fa-solid fa-store group-hover:text-blue-400 transition w-5 text-center"></i> STORE
-                </button>
-                <button onclick="switchTab('profile')" id="nav-profile" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group">
-                    <i class="fa-solid fa-user group-hover:text-blue-400 transition w-5 text-center"></i> STATUS
-                </button>
-                <button onclick="switchTab('logs')" id="nav-logs" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group">
-                    <i class="fa-solid fa-terminal group-hover:text-blue-400 transition w-5 text-center"></i> LOGS
-                </button>
-                <button onclick="switchTab('settings')" id="nav-settings" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group">
-                    <i class="fa-solid fa-database group-hover:text-blue-400 transition w-5 text-center"></i> DATA
-                </button>
+                <button onclick="switchTab('ledger')" id="nav-ledger" class="btn-system-active w-full text-left px-4 py-4 rounded-sm font-system font-bold text-sm transition flex items-center gap-4 group"><i class="fa-solid fa-book-journal-whills group-hover:text-blue-400 transition w-5 text-center"></i> LEDGER</button>
+                <button onclick="switchTab('analytics')" id="nav-analytics" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group"><i class="fa-solid fa-chart-pie group-hover:text-blue-400 transition w-5 text-center"></i> ANALYTICS</button>
+                <button onclick="switchTab('store')" id="nav-store" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group"><i class="fa-solid fa-store group-hover:text-blue-400 transition w-5 text-center"></i> STORE</button>
+                <button onclick="switchTab('profile')" id="nav-profile" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group"><i class="fa-solid fa-user-astronaut group-hover:text-blue-400 transition w-5 text-center"></i> STATUS</button>
+                <button onclick="switchTab('logs')" id="nav-logs" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group"><i class="fa-solid fa-scroll group-hover:text-blue-400 transition w-5 text-center"></i> LOGS</button>
+                <button onclick="switchTab('settings')" id="nav-settings" class="w-full text-left px-4 py-4 rounded-sm text-slate-400 hover:bg-[#111] font-system font-bold text-sm transition flex items-center gap-4 border-l-2 border-transparent group"><i class="fa-solid fa-gear group-hover:text-blue-400 transition w-5 text-center"></i> DATA</button>
             </div>
-
             <div class="p-6 border-t border-[#222]">
                 <div class="bg-black/50 rounded p-4 border border-[#333]">
-                    <div class="flex justify-between items-end mb-2">
-                        <span class="text-[10px] text-slate-500 font-mono tracking-widest">FATIGUE (HP)</span>
-                        <span id="hp-text" class="text-xs font-bold text-red-500 font-mono">100/100</span>
-                    </div>
-                    <div class="w-full bg-[#222] h-1.5 overflow-hidden">
-                        <div id="hp-bar" class="hp-progress h-full transition-all duration-500" style="width: 100%"></div>
-                    </div>
+                    <div class="flex justify-between items-end mb-2"><span class="text-[10px] text-slate-500 font-mono tracking-widest">FATIGUE (HP)</span><span id="hp-text" class="text-xs font-bold text-red-500 font-mono">100/100</span></div>
+                    <div class="w-full bg-[#222] h-1.5 overflow-hidden"><div id="hp-bar" class="hp-progress h-full transition-all duration-500" style="width: 100%"></div></div>
                 </div>
             </div>
         </div>
@@ -140,10 +143,10 @@
     <main class="flex-1 flex flex-col h-full w-full relative overflow-hidden">
         <header class="bg-[#050505]/90 backdrop-blur border-b border-[#222] p-4 md:p-6 flex flex-wrap gap-4 justify-between items-center shadow-lg z-10 w-full shrink-0">
             <div class="flex items-center gap-3 md:gap-6 flex-1 min-w-[200px]">
-                <button onclick="toggleSidebar()" class="text-slate-500 hover:text-blue-400 transition text-2xl px-2 focus:outline-none group"><i class="fa-solid fa-ellipsis-vertical group-hover:drop-shadow-[0_0_8px_#00eaff]"></i></button>
+                <button onclick="toggleSidebar()" class="text-slate-500 hover:text-blue-400 transition text-2xl px-2 focus:outline-none group"><i class="fa-solid fa-bars group-hover:drop-shadow-[0_0_8px_#00eaff]"></i></button>
                 <div class="relative group shrink-0">
-                    <div class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center relative z-10 bg-black border-2 border-blue-500 shadow-[0_0_15px_rgba(0,234,255,0.3)] rounded-sm transform rotate-45 transition-transform duration-500 overflow-hidden">
-                        <span id="level-badge" class="text-xl md:text-2xl font-bold text-white font-system transform -rotate-45 transition-transform duration-500">1</span>
+                    <div class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center relative z-10 bg-black border-2 border-blue-500 shadow-[0_0_15px_rgba(0,234,255,0.3)] rounded-full md:rounded-sm md:transform md:rotate-45 transition-transform duration-500 overflow-hidden">
+                        <span id="level-badge" class="text-xl md:text-2xl font-bold text-white font-system md:transform md:-rotate-45 transition-transform duration-500">1</span>
                     </div>
                     <div class="absolute -bottom-4 md:-bottom-6 w-full text-center text-[8px] md:text-[10px] text-blue-500 font-mono tracking-widest mt-2">LVL</div>
                 </div>
@@ -163,16 +166,38 @@
             <div id="tab-ledger" class="max-w-6xl mx-auto relative z-10 animate-fade-in pb-12">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 border-b border-[#222] pb-4 gap-4">
                     <div><h2 class="text-xl md:text-2xl font-bold text-white font-system tracking-wide mb-1">ACTIVITY LEDGER</h2><p class="text-[10px] md:text-xs text-slate-500 font-mono" id="current-date-display">Recording data for today</p></div>
-                    <button onclick="evaluateDay()" class="w-full sm:w-auto bg-blue-900/20 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black px-6 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,234,255,0.2)]">
+                    <button onclick="evaluateDay()" class="w-full sm:w-auto bg-blue-900/20 border border-blue-500 text-blue-400 px-6 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-moon"></i> EVALUATE DAY
                     </button>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 w-full">
                     <div class="lg:col-span-1 flex flex-col gap-6 w-full">
-                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 shadow-[0_0_20px_rgba(245,158,11,0.1)] border-t-2 border-t-amber-500 w-full"><h3 class="text-xs md:text-sm font-bold text-amber-500 font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-crown"></i> DIRECTIVES</h3><div id="quest-input-container" class="flex gap-2 mb-4 w-full"><input type="text" id="q-input" class="w-full bg-black border border-[#333] p-2 text-white text-xs focus:border-amber-500 focus:outline-none font-mono" placeholder="Set objective..."><button onclick="addDailyQuest()" class="bg-amber-900/20 border border-amber-500 text-amber-500 px-3 py-2 text-xs font-bold transition">+</button></div><div id="quest-list-container" class="space-y-2 w-full"></div></div>
-                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 shadow-[0_0_20px_rgba(157,78,221,0.1)] w-full"><h3 class="text-xs md:text-sm font-bold text-purple-400 font-system tracking-widest mb-4 border-b border-[#222] pb-2 flex items-center gap-2"><i class="fa-solid fa-stopwatch"></i> FOCUS MODE</h3><div id="timer-setup" class="space-y-4 w-full"><div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Objective</label><input type="text" id="t-name" class="w-full bg-black border border-[#333] p-3 text-white text-xs focus:border-purple-500 focus:outline-none font-mono" placeholder="e.g. Code Review"></div><div class="grid grid-cols-2 gap-3 w-full"><div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="t-category" class="w-full bg-black border border-[#333] p-3 text-slate-300 text-xs focus:border-purple-500 focus:outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option></select></div><div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Time</label><select id="t-duration" class="w-full bg-black border border-[#333] p-3 text-slate-300 text-xs focus:border-purple-500 focus:outline-none font-mono"><option value="15">15m</option><option value="25" selected>25m</option><option value="45">45m</option><option value="60">60m</option></select></div></div><button onclick="startTimer()" class="w-full border border-purple-500 bg-purple-900/20 text-purple-400 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition mt-2">ENGAGE</button></div><div id="timer-active" class="hidden flex-col items-center justify-center py-2 w-full"><p id="t-active-name" class="text-[10px] text-slate-400 font-mono text-center uppercase tracking-widest mb-4 border border-[#333] bg-[#111] px-4 py-1 w-full truncate">[ Task Name ]</p><div id="t-display" class="text-5xl md:text-6xl font-system font-bold mb-6 timer-active-anim">25:00</div><button onclick="abortTimer()" class="text-red-500 text-[10px] md:text-xs font-mono uppercase tracking-widest transition">[ ABORT ]</button></div></div>
-                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full"><div class="flex justify-between items-center mb-4 border-b border-[#222] pb-2"><h3 class="text-xs md:text-sm font-bold text-blue-400 font-system tracking-widest flex items-center gap-2"><i class="fa-solid fa-bolt"></i> QUICK CAST</h3><button onclick="document.getElementById('skill-modal').classList.replace('hidden', 'flex')" class="text-[9px] md:text-[10px] bg-[#111] border border-[#333] text-slate-400 px-2 py-1 transition font-mono uppercase">+ Edit</button></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2 md:gap-3 w-full" id="quick-cast-container"></div></div>
+                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full"><h3 class="text-xs md:text-sm font-bold text-amber-500 font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-crown"></i> DIRECTIVES</h3><div id="quest-input-container" class="flex gap-2 mb-4 w-full"><input type="text" id="q-input" class="w-full bg-black border border-[#333] p-2 text-white text-xs outline-none font-mono" placeholder="Set objective..."><button onclick="addDailyQuest()" class="bg-amber-900/20 border border-amber-500 text-amber-500 px-3 py-2 text-xs font-bold transition"><i class="fa-solid fa-plus"></i></button></div><div id="quest-list-container" class="space-y-2 w-full"></div></div>
+                        
+                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full">
+                            <h3 class="text-xs md:text-sm font-bold text-purple-400 font-system tracking-widest mb-4 border-b border-[#222] pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-stopwatch"></i> FOCUS MODE
+                            </h3>
+                            <div id="timer-setup" class="space-y-4 w-full">
+                                <div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Objective</label><input type="text" id="t-name" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono" placeholder="e.g. Code Review"></div>
+                                <div class="grid grid-cols-2 gap-3 w-full">
+                                    <div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="t-category" class="w-full bg-black border border-[#333] p-3 text-slate-300 text-xs outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option></select></div>
+                                    <div class="w-full">
+                                        <label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Time (Min)</label>
+                                        <input type="number" id="t-duration" value="25" min="1" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono">
+                                    </div>
+                                </div>
+                                <button onclick="startTimer()" class="w-full border border-purple-500 bg-purple-900/20 text-purple-400 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition mt-2">QUEST START!</button>
+                            </div>
+                            <div id="timer-active" class="hidden flex-col items-center justify-center py-2 w-full">
+                                <p id="t-active-name" class="text-[10px] text-slate-400 font-mono text-center uppercase tracking-widest mb-4 border border-[#333] bg-[#111] px-4 py-1 w-full truncate">[ Task Name ]</p>
+                                <div id="t-display" class="text-5xl md:text-6xl font-system font-bold mb-6 timer-active-anim">25:00</div>
+                                <button onclick="abortTimer()" class="text-red-500 text-[10px] md:text-xs font-mono uppercase tracking-widest transition">[ ABORT ]</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full"><div class="flex justify-between items-center mb-4 border-b border-[#222] pb-2"><h3 class="text-xs md:text-sm font-bold text-blue-400 font-system tracking-widest flex items-center gap-2"><i class="fa-solid fa-wand-sparkles"></i> QUICK CAST</h3><button onclick="document.getElementById('skill-modal').classList.replace('hidden', 'flex')" class="text-[9px] md:text-[10px] bg-[#111] border border-[#333] text-slate-400 px-2 py-1 transition font-mono uppercase">+ Edit</button></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2 md:gap-3 w-full" id="quick-cast-container"></div></div>
                         <details class="bg-[#0a0a0a] border border-[#333] group w-full"><summary class="p-3 md:p-4 cursor-pointer text-xs md:text-sm font-bold text-slate-400 font-system tracking-widest flex justify-between items-center outline-none"><span><i class="fa-solid fa-pen-nib mr-2"></i> MANUAL INPUT</span><i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform"></i></summary><div class="p-4 md:p-6 pt-0 space-y-4 border-t border-[#222] mt-2"><div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Name</label><input type="text" id="act-name" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono"></div><div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="act-category" class="w-full bg-black border border-[#333] p-3 text-slate-300 text-xs outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option><option value="Chores">Chores</option><option value="Social">Social</option><option value="Entertainment">Entertainment</option></select></div><div class="grid grid-cols-2 gap-2 w-full"><div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Type</label><select id="act-type" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono"><option value="positive" class="text-emerald-500">Pos (+)</option><option value="negative" class="text-red-500">Neg (-)</option></select></div><div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Pts</label><input type="number" id="act-weight" value="5" min="1" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono"></div></div><button onclick="addActivityManual()" class="w-full border border-[#333] text-white py-3 text-[10px] font-bold font-mono uppercase tracking-widest mt-2">+ Add</button></div></details>
                     </div>
                     <div class="lg:col-span-2 w-full"><div class="flex justify-between items-end mb-4 w-full"><h3 class="text-xs md:text-sm font-bold text-slate-300 font-system tracking-widest">PENDING EVALUATION</h3><div class="text-[10px] md:text-xs font-mono text-slate-500">Batch: <span id="daily-score-text" class="text-white font-bold">0</span></div></div><div id="activity-list" class="space-y-2 md:space-y-3 w-full"></div></div>
@@ -181,17 +206,21 @@
 
             <div id="tab-analytics" class="hidden max-w-6xl mx-auto relative z-10 pb-12 w-full">
                 <div class="mb-6 md:mb-8 border-b border-[#222] pb-4"><h2 class="text-xl md:text-2xl font-bold text-white font-system tracking-wide mb-1">DATA ANALYTICS</h2></div>
-                <div class="grid grid-cols-3 gap-2 md:gap-6 mb-6 md:mb-8 w-full"><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 md:mb-2 truncate">Best Streak</p><h3 class="text-2xl md:text-4xl font-system text-emerald-400 font-bold" id="stat-high-streak">0</h3></div><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 md:mb-2 truncate">Good Days</p><h3 class="text-2xl md:text-4xl font-system text-blue-400 font-bold" id="stat-good-days">0</h3></div><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 md:mb-2 truncate">Avg Score</p><h3 class="text-2xl md:text-4xl font-system text-purple-400 font-bold" id="stat-avg-score">0</h3></div></div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 w-full"><div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm lg:col-span-2 w-full"><div class="flex justify-between items-center mb-4 md:mb-6"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest">ALLOCATION (7D)</h3></div><div class="w-full h-40 md:h-48 relative flex justify-center"><canvas id="categoryPieChart"></canvas></div></div><div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm w-full"><div class="flex justify-between items-center mb-4 md:mb-6"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest">TODAY'S RATIO</h3></div><div class="w-full h-32 md:h-40 relative flex justify-center"><canvas id="dailyPieChart"></canvas></div></div></div>
-                <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm w-full"><div class="flex justify-between items-center mb-4 md:mb-6"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest">TREND (14D)</h3></div><div class="w-full h-48 md:h-80 relative"><canvas id="productivityChart"></canvas></div></div>
+                <div class="grid grid-cols-3 gap-2 md:gap-6 mb-6 md:mb-8 w-full"><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 truncate">Best Streak</p><h3 class="text-2xl md:text-4xl font-system text-emerald-400 font-bold" id="stat-high-streak">0</h3></div><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 truncate">Good Days</p><h3 class="text-2xl md:text-4xl font-system text-blue-400 font-bold" id="stat-good-days">0</h3></div><div class="bg-[#0a0a0a] border border-[#333] p-3 md:p-6 text-center w-full"><p class="text-[8px] md:text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1 truncate">Avg Score</p><h3 class="text-2xl md:text-4xl font-system text-purple-400 font-bold" id="stat-avg-score">0</h3></div></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 w-full"><div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm lg:col-span-2 w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest">ALLOCATION (7D)</h3></div><div class="w-full h-40 relative flex justify-center"><canvas id="categoryPieChart"></canvas></div></div><div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest">TODAY'S RATIO</h3></div><div class="w-full h-32 relative flex justify-center"><canvas id="dailyPieChart"></canvas></div></div></div>
+                <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 rounded-sm w-full"><h3 class="text-[10px] md:text-sm font-bold text-white font-system tracking-widest mb-4">TREND (14D)</h3><div class="w-full h-48 relative"><canvas id="productivityChart"></canvas></div></div>
             </div>
 
             <div id="tab-store" class="hidden max-w-5xl mx-auto relative z-10 pb-12 w-full">
                 <div class="mb-6 md:mb-8 border-b border-[#222] pb-4"><h2 class="text-xl md:text-2xl font-bold text-white font-system tracking-wide mb-1">SYSTEM STORE</h2></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
-                    <div class="bg-[#0a0a0a] border border-[#333] p-6 shadow-[0_0_15px_rgba(59,130,246,0.1)] flex flex-col justify-between w-full">
+                    <div class="bg-[#0a0a0a] border border-[#333] p-6 flex flex-col justify-between w-full">
                         <div><div class="flex justify-between items-start mb-4"><i class="fa-solid fa-snowflake text-4xl text-blue-500"></i><span class="bg-blue-900/30 text-blue-400 border border-blue-500 px-2 py-1 text-[9px] font-mono tracking-widest">OWNED: <span id="potion-count">0</span></span></div><h3 class="text-base md:text-lg font-bold text-white font-system mb-2">Streak Freeze</h3><p class="text-[10px] md:text-xs text-slate-400 font-mono mb-4 leading-relaxed">Automatically consumed to protect streak if missed/failed.</p></div>
-                        <button onclick="buyFreezePotion()" class="w-full bg-amber-900/20 border border-amber-500 text-amber-500 py-3 text-[10px] font-bold font-mono uppercase tracking-widest flex justify-center items-center gap-2 mt-4">150 G <i class="fa-solid fa-coins"></i></button>
+                        <button onclick="buyFreezePotion()" class="w-full bg-amber-900/20 border border-amber-500 text-amber-500 py-3 text-[10px] font-bold font-mono uppercase tracking-widest mt-4">150 G <i class="fa-solid fa-coins"></i></button>
+                    </div>
+                    <div class="bg-[#0a0a0a] border border-[#333] p-6 flex flex-col justify-between w-full">
+                        <div><div class="flex justify-between items-start mb-4"><i class="fa-solid fa-wand-magic-sparkles text-4xl text-pink-500"></i><span id="badge-konosuba" class="bg-pink-900/30 text-pink-400 border border-pink-500 px-2 py-1 text-[9px] font-mono tracking-widest hidden">OWNED</span></div><h3 class="text-base md:text-lg font-bold text-white font-system mb-2">Fantasy Guild UI</h3><p class="text-[10px] md:text-xs text-slate-400 font-mono mb-4 leading-relaxed">Ubah sistem menjadi tema Isekai RPG! (Cosmetic Item).</p></div>
+                        <div id="action-konosuba"><button onclick="buyTheme('konosuba', 500)" class="w-full bg-amber-900/20 border border-amber-500 text-amber-500 py-3 text-[10px] font-bold font-mono uppercase tracking-widest mt-4">BUY - 500 G <i class="fa-solid fa-coins"></i></button></div>
                     </div>
                 </div>
             </div>
@@ -211,40 +240,57 @@
 
             <div id="tab-settings" class="hidden max-w-3xl mx-auto relative z-10 pb-12 w-full">
                 
-                <div class="border border-[#333] border-t-blue-500 bg-[#0a0a0a] p-6 md:p-8 relative w-full mb-8 shadow-[0_0_15px_rgba(0,234,255,0.1)]">
-                    <h2 class="text-sm md:text-base font-bold text-blue-400 font-system tracking-widest mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-cloud"></i> CLOUD DATABASE SINKRONISASI
-                    </h2>
-                    <p class="text-[9px] md:text-[10px] font-mono text-slate-400 mb-6 leading-relaxed">
-                        Sambungkan aplikasi ke Supabase (PostgreSQL) agar data aman, tidak hilang saat cache terhapus, dan bisa diakses lintas perangkat.
-                    </p>
+                <div class="border border-[#333] border-t-purple-500 bg-[#0a0a0a] p-6 md:p-8 relative w-full mb-8 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                    <h2 class="text-sm md:text-base font-bold text-purple-400 font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-face-smile-wink"></i> AVATAR COMPANION</h2>
+                    <p class="text-[9px] md:text-[10px] font-mono text-slate-400 mb-6 leading-relaxed">Masukkan link URL gambar (png/jpg/gif) karakter animasi untuk menggantikan avatar pop-up default sistem.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Happy / Success (Level Up, Task Done)</label>
+                            <input type="text" id="char-happy" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Angry / Fail (Missed Quest, Penalty)</label>
+                            <input type="text" id="char-sad" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Chill / Focus (Pomodoro Finished)</label>
+                            <input type="text" id="char-focus" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono">
+                        </div>
+                        <button onclick="saveCharacters()" class="w-full border border-purple-500 bg-purple-900/20 text-purple-400 py-3 text-[10px] font-bold font-mono uppercase tracking-widest mt-2 transition hover:bg-purple-500 hover:text-black">SAVE AVATARS</button>
+                    </div>
+                </div>
+
+                <div class="border border-[#333] border-t-blue-500 bg-[#0a0a0a] p-6 md:p-8 relative w-full mb-8">
+                    <h2 class="text-sm md:text-base font-bold text-blue-400 font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-regular fa-bell"></i> SYSTEM ALERTS</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between bg-[#111] border border-[#333] p-3 md:p-4"><div><h4 class="text-xs font-bold text-white font-system">Morning Setup</h4><p class="text-[8px] font-mono text-slate-500 mt-1">Reminder to set Directives</p></div><input type="time" id="rem-morning" onchange="saveReminders()" value="08:00" class="bg-black border border-[#333] text-blue-400 text-xs font-mono px-2 py-1 outline-none"></div>
+                        <div class="flex items-center justify-between bg-[#111] border border-[#333] p-3 md:p-4"><div><h4 class="text-xs font-bold text-white font-system">Evening Eval</h4><p class="text-[8px] font-mono text-slate-500 mt-1">Reminder to evaluate day</p></div><input type="time" id="rem-evening" onchange="saveReminders()" value="20:00" class="bg-black border border-[#333] text-purple-400 text-xs font-mono px-2 py-1 outline-none"></div>
+                        <button id="btn-noti-perm" onclick="requestNotificationPermission()" class="w-full border border-blue-500 bg-blue-900/20 text-blue-400 py-3 text-[10px] font-bold font-mono uppercase tracking-widest mt-2 transition">ENABLE NOTIFICATIONS</button>
+                    </div>
+                </div>
+
+                <div class="border border-[#333] bg-[#0a0a0a] p-6 md:p-8 relative w-full mb-8">
+                    <h2 class="text-sm md:text-base font-bold text-white font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> CLOUD SYNC</h2>
                     <div class="flex flex-col md:flex-row gap-4">
-                        <button onclick="document.getElementById('auth-overlay').classList.replace('hidden', 'flex')" class="w-full bg-blue-900/20 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition">
-                            OPEN AUTH GATEWAY
-                        </button>
-                        <button onclick="signOut()" id="btn-logout" class="hidden w-full border border-red-500 text-red-500 hover:bg-red-900/20 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition">
-                            DISCONNECT / LOGOUT
-                        </button>
+                        <button onclick="document.getElementById('auth-overlay').classList.replace('hidden', 'flex')" class="w-full bg-blue-900/20 border border-blue-500 text-blue-400 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition">AUTH GATEWAY</button>
+                        <button onclick="signOut()" id="btn-logout" class="hidden w-full border border-red-500 text-red-500 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition">DISCONNECT</button>
                     </div>
                 </div>
 
                 <div class="border border-[#333] bg-[#0a0a0a] p-6 md:p-8 relative w-full">
-                    <h2 class="text-lg md:text-xl font-bold text-white font-system mb-6">LOCAL DATABASE</h2>
+                    <h2 class="text-lg md:text-xl font-bold text-white font-system mb-6">LOCAL DATA</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                         <button id="install-btn" onclick="installPWA()" class="hidden border border-blue-500 bg-blue-900/20 text-blue-400 p-4 md:p-6 text-left sm:col-span-2 w-full"><p class="text-[9px] font-mono uppercase mb-1 md:mb-2">System Core</p><h3 class="font-bold text-sm md:text-lg font-system tracking-wider">INSTALL APP <i class="fa-solid fa-download ml-1"></i></h3></button>
                         <button onclick="exportData()" class="border border-emerald-900 bg-emerald-900/10 text-emerald-500 p-4 md:p-6 text-left w-full"><p class="text-[9px] font-mono uppercase mb-1 md:mb-2">Backup</p><h3 class="font-bold text-sm md:text-lg font-system tracking-wider">EXPORT <i class="fa-solid fa-file-export ml-1"></i></h3></button>
                         <button onclick="document.getElementById('import-file').click()" class="border border-blue-900 bg-blue-900/10 text-blue-500 p-4 md:p-6 text-left w-full"><p class="text-[9px] font-mono uppercase mb-1 md:mb-2">Restore</p><h3 class="font-bold text-sm md:text-lg font-system tracking-wider">IMPORT <i class="fa-solid fa-file-import ml-1"></i></h3></button>
                     </div>
-                    <div class="mt-8 md:mt-12 border-t border-[#222] pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
-                        <div><h4 class="text-red-500 font-bold text-xs md:text-sm font-system tracking-wider">DANGER ZONE</h4><p class="text-[9px] font-mono text-slate-500">Delete all progression.</p></div>
-                        <button onclick="hardReset()" class="w-full md:w-auto bg-red-900/20 border border-red-900 text-red-500 py-2 md:px-6 text-[10px] md:text-xs font-mono uppercase tracking-widest">FACTORY RESET</button>
-                    </div>
+                    <div class="mt-8 md:mt-12 border-t border-[#222] pt-6 flex justify-between items-center w-full"><div><h4 class="text-red-500 font-bold text-xs md:text-sm font-system tracking-wider">DANGER ZONE</h4></div><button onclick="hardReset()" class="bg-red-900/20 border border-red-900 text-red-500 py-2 px-4 text-[10px] md:text-xs font-mono uppercase tracking-widest">FACTORY RESET</button></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <div id="skill-modal" class="fixed inset-0 modal-backdrop hidden z-[80] flex items-center justify-center p-4"><div class="bg-[#0a0a0a] border border-[#333] w-full max-w-sm md:max-w-md relative shadow-[0_0_30px_rgba(0,0,0,0.8)]"><div class="bg-[#111] border-b border-[#333] p-3 md:p-4 flex justify-between items-center"><h3 class="text-xs md:text-sm font-bold text-white font-system tracking-widest uppercase"><i class="fa-solid fa-bolt text-blue-500 mr-2"></i> Create</h3><button onclick="document.getElementById('skill-modal').classList.replace('flex', 'hidden')" class="text-slate-500 hover:text-white px-2"><i class="fa-solid fa-xmark"></i></button></div><div class="p-4 md:p-6 space-y-3 md:space-y-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Name</label><input type="text" id="s-name" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"></div><div class="grid grid-cols-2 gap-3 md:gap-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="s-category" class="w-full bg-black border border-[#333] p-2 md:p-3 text-slate-300 text-xs outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option><option value="Entertainment">Entertainment</option></select></div><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Icon</label><select id="s-icon" class="w-full bg-black border border-[#333] p-2 md:p-3 text-slate-300 text-xs outline-none font-mono"><option value="fa-bolt">⚡ Bolt</option><option value="fa-code">💻 Code</option><option value="fa-book">📚 Book</option><option value="fa-gamepad">🎮 Game</option></select></div></div><div class="grid grid-cols-2 gap-3 md:gap-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Type</label><select id="s-type" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"><option value="positive">Pos (+)</option><option value="negative">Neg (-)</option></select></div><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Pts</label><input type="number" id="s-weight" value="10" min="1" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"></div></div><button onclick="saveNewSkill()" class="w-full border border-blue-500 bg-blue-900/20 text-blue-400 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest mt-2 md:mt-4">Register</button></div></div></div>
+    <div id="skill-modal" class="fixed inset-0 modal-backdrop hidden z-[80] flex items-center justify-center p-4"><div class="bg-[#0a0a0a] border border-[#333] w-full max-w-sm md:max-w-md relative shadow-[0_0_30px_rgba(0,0,0,0.8)]"><div class="bg-[#111] border-b border-[#333] p-3 md:p-4 flex justify-between items-center"><h3 class="text-xs md:text-sm font-bold text-white font-system tracking-widest uppercase"><i class="fa-solid fa-wand-magic-sparkles text-blue-500 mr-2"></i> Create</h3><button onclick="document.getElementById('skill-modal').classList.replace('flex', 'hidden')" class="text-slate-500 hover:text-white px-2"><i class="fa-solid fa-xmark"></i></button></div><div class="p-4 md:p-6 space-y-3 md:space-y-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Name</label><input type="text" id="s-name" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"></div><div class="grid grid-cols-2 gap-3 md:gap-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="s-category" class="w-full bg-black border border-[#333] p-2 md:p-3 text-slate-300 text-xs outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option><option value="Entertainment">Entertainment</option></select></div><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Icon</label><select id="s-icon" class="w-full bg-black border border-[#333] p-2 md:p-3 text-slate-300 text-xs outline-none font-mono"><option value="fa-bolt">⚡ Bolt</option><option value="fa-code">💻 Code</option><option value="fa-book">📚 Book</option><option value="fa-gamepad">🎮 Game</option></select></div></div><div class="grid grid-cols-2 gap-3 md:gap-4"><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Type</label><select id="s-type" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"><option value="positive">Pos (+)</option><option value="negative">Neg (-)</option></select></div><div><label class="block text-[9px] md:text-[10px] font-mono text-slate-500 uppercase mb-1">Pts</label><input type="number" id="s-weight" value="10" min="1" class="w-full bg-black border border-[#333] p-2 md:p-3 text-white text-xs outline-none font-mono"></div></div><button onclick="saveNewSkill()" class="w-full border border-blue-500 bg-blue-900/20 text-white py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest mt-2 md:mt-4">Register</button></div></div></div>
 
     <div id="toast" class="fixed bottom-4 md:bottom-10 right-4 md:right-10 left-4 md:left-auto bg-black border border-blue-500 shadow-[0_0_20px_rgba(0,234,255,0.3)] text-white px-4 py-3 transform translate-y-24 opacity-0 transition-all duration-300 z-[90] flex items-center gap-3"><div class="text-blue-500 animate-pulse text-lg"><i class="fa-solid fa-circle-info"></i></div><div class="flex-1"><h4 class="font-bold text-[10px] md:text-sm font-system tracking-wider text-blue-400 leading-tight">NOTICE</h4><p class="text-[9px] md:text-xs font-mono text-white truncate" id="toast-msg">...</p></div></div>
     
@@ -254,16 +300,14 @@
 
     <script>
         // ==========================================
-        // SUPABASE CONFIGURATION (GANTI INI!)
+        // SUPABASE CONFIGURATION
         // ==========================================
         const SUPABASE_URL = 'https://zjtqmcgxhfndkvhrohym.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_7EXc2JwiEFlEnL1XNKYDeg_jentzBKd';
         
-        // Cek jika SDK termuat
         let supabaseClient = null;
         if(window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE') {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log("Supabase Client Initialized.");
         }
 
         // ==========================================
@@ -272,8 +316,7 @@
         let currentUser = null;
 
         async function checkSession() {
-            if(!supabaseClient) return; // Skip jika belum di-setup
-
+            if(!supabaseClient) return;
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
                 currentUser = session.user;
@@ -290,16 +333,13 @@
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
             const errEl = document.getElementById('auth-error');
-            
             const { data, error } = await supabaseClient.auth.signInWithPassword({ email: email, password: pass });
             if (error) { errEl.innerText = error.message; errEl.classList.remove('hidden'); } 
             else { 
-                errEl.classList.add('hidden');
-                currentUser = data.user;
+                errEl.classList.add('hidden'); currentUser = data.user;
                 document.getElementById('auth-overlay').classList.replace('flex', 'hidden');
                 document.getElementById('btn-logout').classList.replace('hidden', 'block');
-                await loadCloudData();
-                showToast("SYSTEM CLOUD CONNECTED");
+                await loadCloudData(); showToast("SYSTEM CLOUD CONNECTED");
             }
         }
 
@@ -308,7 +348,6 @@
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
             const errEl = document.getElementById('auth-error');
-
             const { data, error } = await supabaseClient.auth.signUp({ email: email, password: pass });
             if (error) { errEl.innerText = error.message; errEl.classList.remove('hidden'); } 
             else { alert("Registrasi berhasil! Silakan Login."); errEl.classList.add('hidden'); }
@@ -325,41 +364,24 @@
         // ==========================================
         async function saveToCloud() {
             if (!supabaseClient || !currentUser) return;
-            // Menyimpan objek state ke dalam JSONB di Supabase
-            const { error } = await supabaseClient
-                .from('player_data')
-                .upsert({ user_id: currentUser.id, state_json: state }, { onConflict: 'user_id' });
-            
+            const { error } = await supabaseClient.from('player_data').upsert({ user_id: currentUser.id, state_json: state }, { onConflict: 'user_id' });
             if(error) console.error("Cloud Sync Error:", error);
-            else console.log("Cloud Saved.");
         }
 
         async function loadCloudData() {
             if (!supabaseClient || !currentUser) return;
-            const { data, error } = await supabaseClient
-                .from('player_data')
-                .select('state_json')
-                .eq('user_id', currentUser.id)
-                .single();
-
+            const { data, error } = await supabaseClient.from('player_data').select('state_json').eq('user_id', currentUser.id).single();
             if (data && data.state_json) {
-                state = { ...state, ...data.state_json }; // Timpa state lokal dengan data Cloud
-                saveDataLocal(); // Backup lokal
-                initApp(); // Re-render UI
-                showToast("CLOUD DATA RESTORED");
+                state = { ...state, ...data.state_json }; 
+                saveDataLocal(); initApp(); showToast("CLOUD DATA RESTORED");
             }
         }
 
-        // Override saveData lama agar otomatis nembak ke Cloud juga
         function saveDataLocal() { localStorage.setItem('lifeLedgerData', JSON.stringify(state)); }
-        function saveData() {
-            saveDataLocal();
-            // Debounce saveToCloud agar tidak spamming server tiap detik (bisa dioptimasi nanti, panggil langsung utk skrg)
-            saveToCloud(); 
-        }
+        function saveData() { saveDataLocal(); saveToCloud(); }
 
         // ==========================================
-        // SYSTEM LOGIC LAMA 
+        // UI & SYSTEM STATE LOGIC
         // ==========================================
         function toggleSidebar() { const sb = document.getElementById('sidebar'); const bd = document.getElementById('mobile-backdrop'); if (window.innerWidth < 768) { sb.classList.toggle('-translate-x-full'); bd.classList.toggle('hidden'); } else { sb.classList.toggle('md-collapsed'); } }
         function handleMobileNavClick() { if (window.innerWidth < 768) toggleSidebar(); }
@@ -370,15 +392,102 @@
             level: 1, currentXp: 0, neededXp: 200, hp: 100, maxHp: 100, gold: 0, freezePotions: 0, 
             currentStreak: 0, highestStreak: 0, lastStreakDate: null, todayScore: 0,
             todayActivities: [], dailyRecords: {}, history: [], skills: [], dailyQuests: [],
+            reminders: { morning: "08:00", evening: "20:00", enabled: false, lastTriggered: {} },
+            themesOwned: ['default'], activeTheme: 'default',
+            characters: { happy: "", sad: "", focus: "" }, // NEW: Custom Characters
             achievements: [ { id: 'str_3', title: "Awakening (3 Days)", type: "streak", req: 3, xp: 150, done: false }, { id: 'str_7', title: "Focus Aura (7 Days)", type: "streak", req: 7, xp: 500, done: false } ]
         };
 
-        // ... Sisa fungsi Timer, Evaluate, Render UI (sama seperti versi sebelumnya) ...
+        // --- NEW: CHARACTER POPUP LOGIC ---
+        function saveCharacters() {
+            state.characters.happy = document.getElementById('char-happy').value || "https://api.dicebear.com/7.x/adventurer/svg?seed=Aqua&backgroundColor=b6e3f4";
+            state.characters.sad = document.getElementById('char-sad').value || "https://api.dicebear.com/7.x/adventurer/svg?seed=Megumin&backgroundColor=ffdfbf";
+            state.characters.focus = document.getElementById('char-focus').value || "https://api.dicebear.com/7.x/adventurer/svg?seed=Kazuma&backgroundColor=c0aede";
+            saveData(); showToast("AVATARS SAVED");
+        }
+
+        function showCharacterPopup(type, message) {
+            const popup = document.getElementById('char-popup');
+            const img = document.getElementById('char-popup-img');
+            const msg = document.getElementById('char-popup-msg');
+            
+            if (type === 'success' || type === 'levelup') img.src = state.characters.happy;
+            else if (type === 'fail') img.src = state.characters.sad;
+            else if (type === 'focus') img.src = state.characters.focus;
+
+            msg.innerText = message;
+            popup.classList.remove('bottom-[-100%]'); popup.classList.add('bottom-0');
+            setTimeout(() => { popup.classList.remove('bottom-0'); popup.classList.add('bottom-[-100%]'); }, 4000);
+        }
+
+        // --- THEME LOGIC ---
+        function buyTheme(themeId, price) {
+            if (state.themesOwned.includes(themeId)) { applyTheme(themeId); showToast("THEME EQUIPPED"); } 
+            else if (state.gold >= price) {
+                if(confirm(`Beli tema ini seharga ${price} Gold?`)) {
+                    state.gold -= price; state.themesOwned.push(themeId); addLog("Unlocked new Theme!", "success");
+                    applyTheme(themeId); showToast("THEME UNLOCKED & EQUIPPED");
+                }
+            } else { alert("SYSTEM: Insufficient Gold."); }
+        }
+
+        function applyTheme(themeId) {
+            state.activeTheme = themeId; saveData();
+            document.body.classList.remove('theme-konosuba');
+            if (themeId !== 'default') document.body.classList.add(`theme-${themeId}`);
+            renderUI(); 
+        }
+
+        // --- REMINDER LOGIC ---
+        function initRemindersUI() {
+            if(state.reminders) {
+                document.getElementById('rem-morning').value = state.reminders.morning || "08:00";
+                document.getElementById('rem-evening').value = state.reminders.evening || "20:00";
+                if(state.reminders.enabled && Notification.permission === "granted") { document.getElementById('btn-noti-perm').innerText = "NOTIFICATIONS ACTIVE"; }
+            }
+            setInterval(checkRemindersLoop, 60000); 
+        }
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) { alert("Browser tidak mendukung notifikasi."); } 
+            else if (Notification.permission === "granted") { state.reminders.enabled = true; saveData(); initRemindersUI(); showToast("ALREADY ACTIVE"); } 
+            else if (Notification.permission !== "denied") { Notification.requestPermission().then(function (p) { if (p === "granted") { state.reminders.enabled = true; saveData(); initRemindersUI(); showToast("NOTIFICATIONS ENABLED"); } }); }
+        }
+        function saveReminders() { state.reminders.morning = document.getElementById('rem-morning').value; state.reminders.evening = document.getElementById('rem-evening').value; saveData(); showToast("REMINDER UPDATED"); }
+        function checkRemindersLoop() {
+            if (!state.reminders || !state.reminders.enabled || Notification.permission !== "granted") return;
+            const now = new Date(); const currentTime = now.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit', hour12: false}).replace('.', ':');
+            const todayStr = getTodayString();
+            const checks = [ { time: state.reminders.morning, title: "SYSTEM: Morning Setup", msg: "Waktunya menetapkan Daily Directives!" }, { time: state.reminders.evening, title: "SYSTEM: Evening Eval", msg: "Evaluasi harian belum dilakukan." } ];
+            checks.forEach(r => {
+                if (r.time === currentTime) {
+                    const key = r.time + "-" + todayStr;
+                    if (!state.reminders.lastTriggered) state.reminders.lastTriggered = {};
+                    if (state.reminders.lastTriggered[key]) return; 
+                    triggerOSNotification(r.title, r.msg); state.reminders.lastTriggered[key] = true; saveData();
+                }
+            });
+        }
+        function triggerOSNotification(title, body) {
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) { navigator.serviceWorker.ready.then(function(reg) { reg.showNotification(title, { body: body, icon: './icon-192.png' }); }); } 
+            else { new Notification(title, { body: body, icon: './icon-192.png' }); }
+        }
+
+        // --- TIMER & DIRECTIVES ---
         let timerInterval = null; let timerRemaining = 0; let activeTimerTask = {};
-        function startTimer() { const name = document.getElementById('t-name').value || "Deep Focus"; const category = document.getElementById('t-category').value; const duration = parseInt(document.getElementById('t-duration').value); activeTimerTask = { name, category, weight: duration }; timerRemaining = duration * 60; document.getElementById('timer-setup').classList.add('hidden'); document.getElementById('timer-active').classList.remove('hidden'); document.getElementById('timer-active').classList.add('flex'); document.getElementById('t-active-name').innerText = `[ ${name} ]`; updateTimerDisplay(); timerInterval = setInterval(() => { timerRemaining--; updateTimerDisplay(); if (timerRemaining <= 0) completeTimer(); }, 1000); }
+        function startTimer() { 
+            const name = document.getElementById('t-name').value || "Deep Focus"; 
+            const category = document.getElementById('t-category').value; 
+            const duration = parseInt(document.getElementById('t-duration').value); // NOW FLEXIBLE
+            if(isNaN(duration) || duration <= 0) return alert("Masukkan waktu yang valid!");
+
+            activeTimerTask = { name, category, weight: duration }; timerRemaining = duration * 60; 
+            document.getElementById('timer-setup').classList.add('hidden'); document.getElementById('timer-active').classList.remove('hidden'); document.getElementById('timer-active').classList.add('flex'); document.getElementById('t-active-name').innerText = `[ ${name} ]`; 
+            updateTimerDisplay(); 
+            timerInterval = setInterval(() => { timerRemaining--; updateTimerDisplay(); if (timerRemaining <= 0) completeTimer(); }, 1000); 
+        }
         function updateTimerDisplay() { const m = String(Math.floor(timerRemaining / 60)).padStart(2, '0'); const s = String(timerRemaining % 60).padStart(2, '0'); document.getElementById('t-display').innerText = `${m}:${s}`; }
         function abortTimer() { if(confirm("Abort focus session?")) { clearInterval(timerInterval); resetTimerUI(); addLog("FOCUS SESSION ABORTED", "penalty"); } }
-        function completeTimer() { clearInterval(timerInterval); processAddActivity(activeTimerTask.name + " (Focus)", activeTimerTask.category, 'positive', activeTimerTask.weight); showToast("FOCUS SESSION COMPLETE!"); addLog(`FOCUS: ${activeTimerTask.name} (+${activeTimerTask.weight})`, "success"); resetTimerUI(); }
+        function completeTimer() { clearInterval(timerInterval); processAddActivity(activeTimerTask.name + " (Focus)", activeTimerTask.category, 'positive', activeTimerTask.weight); showToast("FOCUS COMPLETE!"); addLog(`FOCUS: ${activeTimerTask.name} (+${activeTimerTask.weight} Pts)`, "success"); resetTimerUI(); triggerOSNotification("SYSTEM", "Sesi fokus selesai!"); showCharacterPopup('focus', "Kerja bagus! Istirahatlah sebentar."); }
         function resetTimerUI() { document.getElementById('timer-setup').classList.remove('hidden'); document.getElementById('timer-active').classList.add('hidden'); document.getElementById('timer-active').classList.remove('flex'); document.getElementById('t-name').value = ''; }
 
         function addDailyQuest() { if(state.dailyQuests.length >= 3) return showToast("MAX 3 DIRECTIVES"); const val = document.getElementById('q-input').value.trim(); if(!val) return; state.dailyQuests.push({ id: Date.now(), text: val, completed: false }); document.getElementById('q-input').value = ''; saveData(); renderDailyQuests(); }
@@ -386,25 +495,32 @@
         function removeDailyQuest(id, e) { e.stopPropagation(); state.dailyQuests = state.dailyQuests.filter(x => x.id !== id); saveData(); renderDailyQuests(); }
         function renderDailyQuests() { const list = document.getElementById('quest-list-container'); list.innerHTML = ''; if (state.dailyQuests.length === 0) { list.innerHTML = `<div class="p-2 border border-dashed border-amber-900/50 text-center text-amber-900/50 font-mono text-[9px] uppercase">No Directives</div>`; } state.dailyQuests.forEach(q => { const bg = q.completed ? 'bg-amber-900/20 border-amber-500/50' : 'bg-[#111] border-[#333]'; const textClass = q.completed ? 'text-amber-500 line-through opacity-70' : 'text-slate-300'; const icon = q.completed ? '<i class="fa-solid fa-check-square text-amber-500"></i>' : '<i class="fa-regular fa-square text-slate-500"></i>'; list.innerHTML += `<div onclick="toggleDailyQuest(${q.id})" class="cursor-pointer border p-2 flex justify-between items-center ${bg}"><div class="flex items-center gap-2">${icon}<span class="text-[10px] font-system tracking-wide truncate ${textClass}">${q.text}</span></div><button onclick="removeDailyQuest(${q.id}, event)" class="text-slate-600 px-2"><i class="fa-solid fa-xmark text-[10px]"></i></button></div>`; }); document.getElementById('quest-input-container').style.display = state.dailyQuests.length >= 3 ? 'none' : 'flex'; }
 
-        function buyFreezePotion() { if (state.gold >= 150) { state.gold -= 150; state.freezePotions++; addLog("Purchased Streak Freeze.", "success"); showToast("ITEM ACQUIRED: Streak Freeze"); saveData(); renderUI(); } else { alert("SYSTEM: Insufficient Gold."); } }
+        function buyFreezePotion() { if (state.gold >= 150) { state.gold -= 150; state.freezePotions++; addLog("Purchased Streak Freeze.", "success"); showToast("ITEM ACQUIRED"); saveData(); renderUI(); } else { alert("SYSTEM: Insufficient Gold."); } }
 
+        // --- CORE EVALUATION ---
         let chartInstance = null; let dailyPieInstance = null; let categoryPieInstance = null; Chart.defaults.color = '#888'; Chart.defaults.font.family = 'JetBrains Mono';
 
-        // Fungsi init dipisah agar bisa dipanggil ulang setelah data Cloud ditarik
         function bootSystem() {
             const data = localStorage.getItem('lifeLedgerData'); 
             if (data) { const parsed = JSON.parse(data); state = { ...state, ...parsed }; } 
-            
-            // Cek status Cloud Supabase (jika dikonfigurasi)
-            if(supabaseClient) { checkSession(); } 
-            else { document.getElementById('auth-overlay').classList.replace('flex', 'hidden'); initApp(); }
+            if(supabaseClient) { checkSession(); } else { document.getElementById('auth-overlay').classList.replace('flex', 'hidden'); initApp(); }
         }
 
         function initApp() {
-            state.gold = state.gold || 0; state.freezePotions = state.freezePotions || 0; if (!state.skills || state.skills.length === 0) state.skills = [...defaultSkills]; if (!state.dailyQuests) state.dailyQuests = [];
+            state.gold = state.gold || 0; state.freezePotions = state.freezePotions || 0; if (!state.skills || state.skills.length === 0) state.skills = [...defaultSkills]; if (!state.dailyQuests) state.dailyQuests = []; if(!state.themesOwned) state.themesOwned = ['default']; if(!state.activeTheme) state.activeTheme = 'default';
+            if(!state.characters) {
+                state.characters = { happy: "https://api.dicebear.com/7.x/adventurer/svg?seed=Aqua&backgroundColor=b6e3f4", sad: "https://api.dicebear.com/7.x/adventurer/svg?seed=Megumin&backgroundColor=ffdfbf", focus: "https://api.dicebear.com/7.x/adventurer/svg?seed=Kazuma&backgroundColor=c0aede" };
+            }
+            
+            // Render Character URLs to Settings Inputs
+            document.getElementById('char-happy').value = state.characters.happy;
+            document.getElementById('char-sad').value = state.characters.sad;
+            document.getElementById('char-focus').value = state.characters.focus;
+
             document.getElementById('current-date-display').innerText = getTodayString(); 
             if (Object.keys(state.dailyRecords).length === 0) injectDummyData(); 
-            checkDayRollover(); renderQuickCast(); renderDailyQuests(); renderUI();
+            checkDayRollover(); renderQuickCast(); renderDailyQuests(); initRemindersUI(); renderUI();
+            if(state.activeTheme) applyTheme(state.activeTheme);
         }
 
         function getTodayString() { const d = new Date(); return d.toISOString().split('T')[0]; }
@@ -431,9 +547,22 @@
             for (let c in batchCats) { if (!dr.categories[c]) dr.categories[c] = 0; dr.categories[c] += batchCats[c]; }
 
             let isStreakLost = false;
-            if (isDirectiveFailed) { state.hp -= 30; dr.score -= 30; isStreakLost = true; addLog(`DIRECTIVE FAILED (-30 HP)`, 'penalty'); document.body.classList.add('damage-anim'); setTimeout(() => document.body.classList.remove('damage-anim'), 500); } 
-            else if (state.todayScore > 0) { let baseExp = 50 + (state.todayScore * 2); let earnedGold = state.todayScore * 2; state.gold += earnedGold; addLog(`EVAL SUCCESS: +${baseExp}XP | +${earnedGold}G`, 'success'); addXp(baseExp); } 
-            else if (state.todayScore < 0) { state.hp -= 10; isStreakLost = true; addLog(`EVAL NEGATIVE`, 'penalty'); document.body.classList.add('damage-anim'); setTimeout(() => document.body.classList.remove('damage-anim'), 500); }
+            
+            if (isDirectiveFailed) { 
+                state.hp -= 30; dr.score -= 30; isStreakLost = true; addLog(`DIRECTIVE FAILED (-30 HP)`, 'penalty'); 
+                document.body.classList.add('damage-anim'); setTimeout(() => document.body.classList.remove('damage-anim'), 500); 
+                showCharacterPopup('fail', "Baka! Quest utama belum kamu selesaikan!");
+            } 
+            else if (state.todayScore > 0) { 
+                let baseExp = 50 + (state.todayScore * 2); let earnedGold = state.todayScore * 2; state.gold += earnedGold; 
+                addLog(`EVAL SUCCESS: +${baseExp}XP | +${earnedGold}G`, 'success'); addXp(baseExp); 
+                showCharacterPopup('success', `Hebat! Kamu mendapatkan ${earnedGold} Gold hari ini!`);
+            } 
+            else if (state.todayScore < 0) { 
+                state.hp -= 10; isStreakLost = true; addLog(`EVAL NEGATIVE`, 'penalty'); 
+                document.body.classList.add('damage-anim'); setTimeout(() => document.body.classList.remove('damage-anim'), 500); 
+                showCharacterPopup('fail', "Hari ini buruk sekali... Fokusmu hancur!");
+            }
 
             if (!isStreakLost && state.lastStreakDate !== todayStr && dr.score > 0) { state.currentStreak++; if (state.currentStreak > state.highestStreak) state.highestStreak = state.currentStreak; state.lastStreakDate = todayStr; addLog(`STREAK: ${state.currentStreak}`, 'level'); } 
             else if (isStreakLost || dr.score < 0) { if (state.freezePotions > 0 && state.currentStreak > 0) { state.freezePotions--; addLog("Freeze Potion consumed.", "success"); showToast("STREAK FREEZE ACTIVATED"); } else { state.currentStreak = 0; } }
@@ -457,13 +586,39 @@
 
         function typeWriter(elementId, text, i) { if (i === 0) document.getElementById(elementId).innerHTML = '<span class="cursor-blink">|</span>'; if (i < text.length) { document.getElementById(elementId).innerHTML = text.substring(0, i + 1) + '<span class="cursor-blink">|</span>'; setTimeout(() => typeWriter(elementId, text, i + 1), 10); } else document.getElementById(elementId).innerHTML = text; }
         function addXp(amount) { state.currentXp += amount; if (state.currentXp >= state.neededXp) levelUp(); updateHeader(); }
-        function levelUp() { state.currentXp -= state.neededXp; state.level++; state.neededXp = Math.floor(state.level * 200 * 1.2); state.hp = state.maxHp; addLog(`LEVEL UP! Reached Level ${state.level}`, 'level'); if (state.currentXp >= state.neededXp) levelUp(); else { document.getElementById('new-level-display').innerText = state.level; document.getElementById('lvl-up-overlay').classList.replace('hidden', 'flex'); } }
+        function levelUp() { 
+            state.currentXp -= state.neededXp; state.level++; state.neededXp = Math.floor(state.level * 200 * 1.2); state.hp = state.maxHp; 
+            addLog(`LEVEL UP! Reached Level ${state.level}`, 'level'); 
+            if (state.currentXp >= state.neededXp) levelUp(); 
+            else { 
+                document.getElementById('new-level-display').innerText = state.level; 
+                document.getElementById('lvl-up-overlay').classList.replace('hidden', 'flex'); 
+                triggerOSNotification("SYSTEM LEVEL UP", "Selamat! Anda naik ke Level " + state.level); 
+                showCharacterPopup('levelup', `Sugoi!! Kamu naik ke Level ${state.level}!`);
+            } 
+        }
         function checkAchievements() { state.achievements.forEach(ach => { if (!ach.done && ach.type === 'streak' && state.currentStreak >= ach.req) { ach.done = true; addXp(ach.xp); addLog(`ACHIEVE: ${ach.title}`, 'success'); showToast(`Unlocked: ${ach.title}`); } }); }
 
-        function renderUI() { updateHeader(); calculateTodayScore(); renderLedger(); renderAchievements(); renderLogs(); document.getElementById('potion-count').innerText = state.freezePotions || 0; if(chartInstance || dailyPieInstance || categoryPieInstance) initChart(); }
+        function renderUI() { 
+            updateHeader(); calculateTodayScore(); renderLedger(); renderAchievements(); renderLogs(); 
+            document.getElementById('potion-count').innerText = state.freezePotions || 0;
+            
+            if(document.getElementById('badge-konosuba')) {
+                if (state.themesOwned.includes('konosuba')) {
+                    document.getElementById('badge-konosuba').classList.remove('hidden');
+                    if (state.activeTheme === 'konosuba') {
+                        document.getElementById('action-konosuba').innerHTML = `<button onclick="applyTheme('default')" class="w-full bg-[#111] border border-[#BCAAA4] text-[#8D6E63] py-3 text-[10px] font-bold font-mono uppercase mt-4">UNEQUIP (BACK TO DARK)</button>`;
+                    } else {
+                        document.getElementById('action-konosuba').innerHTML = `<button onclick="applyTheme('konosuba')" class="w-full bg-pink-900/20 border border-pink-500 text-pink-500 py-3 text-[10px] font-bold font-mono uppercase mt-4">EQUIP THEME</button>`;
+                    }
+                }
+            }
+            if(chartInstance || dailyPieInstance || categoryPieInstance) initChart(); 
+        }
+        
         function updateHeader() { document.getElementById('level-badge').innerText = state.level; document.getElementById('xp-text').innerText = `${state.currentXp} / ${state.neededXp}`; document.getElementById('xp-bar').style.width = `${(state.currentXp / state.neededXp) * 100}%`; document.getElementById('streak-text').innerText = state.currentStreak; document.getElementById('hp-text').innerText = `${state.hp}/${state.maxHp}`; document.getElementById('hp-bar').style.width = `${Math.max(0, (state.hp / state.maxHp) * 100)}%`; document.getElementById('gold-text').innerText = state.gold || 0; document.getElementById('attr-con').innerText = state.currentStreak * 2 + 10; }
-        function renderLedger() { const list = document.getElementById('activity-list'); list.innerHTML = ''; if (state.todayActivities.length === 0) { list.innerHTML = `<div class="p-4 border border-dashed border-[#333] text-center text-slate-500 font-mono text-[10px] uppercase">No Pending Data</div>`; return; } state.todayActivities.forEach(act => { const isPos = act.type === 'positive'; list.innerHTML += `<div class="p-2 md:p-3 flex justify-between items-center bg-[#111] ${isPos ? 'act-positive' : 'act-negative'} mb-2"><div><div class="flex items-center gap-2 mb-1"><span class="text-[8px] font-bold px-1 py-0.5 bg-[#222] text-slate-400 uppercase tracking-widest">${act.category}</span><span class="text-[8px] text-slate-500 font-mono">${act.time}</span></div><h4 class="text-xs md:text-sm font-bold text-white font-system tracking-wide truncate max-w-[120px] md:max-w-[200px]">${act.name}</h4></div><div class="flex items-center gap-3 md:gap-4"><span class="font-mono text-[10px] md:text-xs font-bold ${isPos ? 'text-emerald-400' : 'text-red-400'}">${isPos ? '+' : '-'}${act.weight}</span><button onclick="deleteActivity(${act.id})" class="text-slate-500 hover:text-red-500 px-2"><i class="fa-solid fa-trash text-[10px]"></i></button></div></div>`; }); }
-        function renderAchievements() { const list = document.getElementById('achievement-list'); list.innerHTML = ''; state.achievements.forEach(ach => { list.innerHTML += `<div class="p-3 border ${ach.done ? 'border-emerald-500/50 bg-emerald-900/10' : 'border-[#333] bg-[#111] opacity-50'} flex justify-between items-center mb-2"><div><h4 class="text-[10px] md:text-xs font-bold text-white font-system tracking-wide ${ach.done ? 'text-emerald-400' : ''}">${ach.title}</h4><p class="text-[8px] font-mono text-slate-500 uppercase">Reward: ${ach.xp} XP</p></div>${ach.done ? '<i class="fa-solid fa-check text-emerald-500 text-sm"></i>' : '<i class="fa-solid fa-lock text-slate-600 text-sm"></i>'}</div>`; }); }
+        function renderLedger() { const list = document.getElementById('activity-list'); list.innerHTML = ''; if (state.todayActivities.length === 0) { list.innerHTML = `<div class="p-3 border border-dashed border-[#333] text-center text-slate-500 font-mono text-[9px] uppercase">No Pending Data</div>`; return; } state.todayActivities.forEach(act => { const isPos = act.type === 'positive'; list.innerHTML += `<div class="p-2 flex justify-between items-center bg-[#111] ${isPos ? 'act-positive' : 'act-negative'} mb-1.5"><div><div class="flex items-center gap-1 mb-0.5"><span class="text-[7px] font-bold px-1 py-0.5 bg-[#222] text-slate-400 uppercase tracking-widest">${act.category}</span><span class="text-[7px] text-slate-500 font-mono">${act.time}</span></div><h4 class="text-[10px] md:text-sm font-bold text-white font-system tracking-wide truncate max-w-[150px]">${act.name}</h4></div><div class="flex items-center gap-2"><span class="font-mono text-[9px] font-bold ${isPos ? 'text-emerald-400' : 'text-red-400'}">${isPos ? '+' : '-'}${act.weight}</span><button onclick="deleteActivity(${act.id})" class="text-slate-500 hover:text-red-500 px-1"><i class="fa-solid fa-trash text-[9px]"></i></button></div></div>`; }); }
+        function renderAchievements() { const list = document.getElementById('achievement-list'); list.innerHTML = ''; state.achievements.forEach(ach => { list.innerHTML += `<div class="p-2 border ${ach.done ? 'border-emerald-500/50 bg-emerald-900/10' : 'border-[#333] bg-[#111] opacity-50'} flex justify-between items-center mb-1.5"><div><h4 class="text-[9px] font-bold text-white font-system tracking-wide ${ach.done ? 'text-emerald-400' : ''}">${ach.title}</h4><p class="text-[7px] font-mono text-slate-500 uppercase">Reward: ${ach.xp} XP</p></div>${ach.done ? '<i class="fa-solid fa-check text-emerald-500 text-xs"></i>' : '<i class="fa-solid fa-lock text-slate-600 text-xs"></i>'}</div>`; }); }
 
         function initChart() {
             const dates = Object.keys(state.dailyRecords).sort();
@@ -472,9 +627,9 @@
             const recentDates = dates.slice(-14); const scores = recentDates.map(d => state.dailyRecords[d].score);
             if (chartInstance) chartInstance.destroy(); chartInstance = new Chart(document.getElementById('productivityChart').getContext('2d'), { type: 'line', data: { labels: recentDates, datasets: [{ label: 'Net Score', data: scores, borderColor: '#00eaff', backgroundColor: 'rgba(0, 234, 255, 0.1)', borderWidth: 2, fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#333' } }, x: { grid: { display: false } } } } });
             const todayStr = getTodayString(); let todayPos = 0, todayNeg = 0; if (state.dailyRecords[todayStr]) { todayPos = state.dailyRecords[todayStr].posScore || 0; todayNeg = state.dailyRecords[todayStr].negScore || 0; }
-            if (dailyPieInstance) dailyPieInstance.destroy(); dailyPieInstance = new Chart(document.getElementById('dailyPieChart').getContext('2d'), { type: 'pie', data: { labels: ['Pos', 'Neg'], datasets: [{ data: (todayPos===0&&todayNeg===0)?[0.1,0.1]:[todayPos, todayNeg], backgroundColor: (todayPos===0&&todayNeg===0)?['#333','#333']:['#10b981', '#ef4444'], borderColor: '#0a0a0a', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: {size: 10} } } } } });
+            if (dailyPieInstance) dailyPieInstance.destroy(); dailyPieInstance = new Chart(document.getElementById('dailyPieChart').getContext('2d'), { type: 'pie', data: { labels: ['Pos', 'Neg'], datasets: [{ data: (todayPos===0&&todayNeg===0)?[0.1,0.1]:[todayPos, todayNeg], backgroundColor: (todayPos===0&&todayNeg===0)?['#333','#333']:['#10b981', '#ef4444'], borderColor: '#0a0a0a', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: {size: 8} } } } } });
             const last7Dates = dates.slice(-7); let catSums = { Study: 0, Work: 0, Health: 0, Chores: 0, Social: 0, Entertainment: 0 }; last7Dates.forEach(d => { const dayCats = state.dailyRecords[d].categories || {}; for (let c in dayCats) { if(catSums[c] !== undefined) catSums[c] += dayCats[c]; } }); const catLabels = Object.keys(catSums); const catData = Object.values(catSums); const totalCatData = catData.reduce((a,b)=>a+b,0); const catColors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#ef4444'];
-            if (categoryPieInstance) categoryPieInstance.destroy(); categoryPieInstance = new Chart(document.getElementById('categoryPieChart').getContext('2d'), { type: 'doughnut', data: { labels: catLabels, datasets: [{ data: totalCatData === 0 ? [1,1,1,1,1,1] : catData, backgroundColor: totalCatData === 0 ? ['#222','#222','#222','#222','#222','#222'] : catColors, borderColor: '#0a0a0a', borderWidth: 3 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#aaa', font: {size: 8}, boxWidth: 10 } } } } });
+            if (categoryPieInstance) categoryPieInstance.destroy(); categoryPieInstance = new Chart(document.getElementById('categoryPieChart').getContext('2d'), { type: 'doughnut', data: { labels: catLabels, datasets: [{ data: totalCatData === 0 ? [1,1,1,1,1,1] : catData, backgroundColor: totalCatData === 0 ? ['#222','#222','#222','#222','#222','#222'] : catColors, borderColor: '#0a0a0a', borderWidth: 3 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'right', labels: { color: '#aaa', font: {size: 8}, boxWidth: 8 } } } } });
         }
 
         // PWA Utility
@@ -491,10 +646,10 @@
         function renderLogs() { document.getElementById('log-list').innerHTML = state.history.map(l => `<div class="p-2 md:p-3 bg-[#111] mb-1.5 border-l-2 ${l.type==='penalty'?'border-red-500':(l.type==='level'?'border-purple-500':'border-blue-500')} flex justify-between items-center"><span class="${l.type==='penalty'?'text-red-400':''} leading-tight">${l.msg}</span><span class="text-slate-500 ml-2 whitespace-nowrap">${l.time}</span></div>`).join(''); }
         function showToast(msg) { const toast = document.getElementById('toast'); document.getElementById('toast-msg').innerText = msg; toast.classList.remove('translate-y-24', 'opacity-0'); setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000); }
 
-        function checkDayRollover() { const todayStr = getTodayString(); const lastRecordDate = Object.keys(state.dailyRecords).sort().pop(); if (lastRecordDate && lastRecordDate !== todayStr) { const diffDays = Math.ceil(Math.abs(new Date(todayStr) - new Date(lastRecordDate)) / (1000 * 60 * 60 * 24)); if (diffDays > 1 && state.currentStreak > 0) { let missedDays = diffDays - 1; while(missedDays > 0 && state.freezePotions > 0) { state.freezePotions--; missedDays--; addLog("Streak Freeze activated!", "success"); } if (missedDays > 0) { state.currentStreak = 0; addLog("Missing data. Streak reset.", "penalty"); } saveData(); } state.dailyQuests = []; saveData(); } }
+        function checkDayRollover() { const todayStr = getTodayString(); const lastRecordDate = Object.keys(state.dailyRecords).sort().pop(); if (lastRecordDate && lastRecordDate !== todayStr) { const diffDays = Math.ceil(Math.abs(new Date(todayStr) - new Date(lastRecordDate)) / (1000 * 60 * 60 * 24)); if (diffDays > 1 && state.currentStreak > 0) { let missedDays = diffDays - 1; while(missedDays > 0 && state.freezePotions > 0) { state.freezePotions--; missedDays--; addLog("Streak Freeze activated!", "success"); } if (missedDays > 0) { state.currentStreak = 0; addLog("Missing data. Streak reset.", "penalty"); } saveData(); } state.dailyQuests = []; state.reminders.lastTriggered = {}; saveData(); } }
         function injectDummyData() { let d = new Date(); for(let i=10; i>=1; i--) { d.setDate(d.getDate() - 1); let pos = Math.floor(Math.random() * 20) + 5; let neg = Math.floor(Math.random() * 10); state.dailyRecords[d.toISOString().split('T')[0]] = { score: pos - neg, posScore: pos, negScore: neg, categories: { Study: pos-2, Entertainment: neg, Social: 2 } }; } saveData(); }
         
-        // BOOT SYSTEM
+        // BOOT
         bootSystem();
     </script>
 </body>
