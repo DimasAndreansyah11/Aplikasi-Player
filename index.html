@@ -52,8 +52,6 @@
         input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
         #char-popup-img { object-fit: contain; max-height: 180px; }
-
-        /* Note Tool Button for Dark Mode */
         .note-tool-btn { background-color: #111; border: 1px solid #333; color: #94a3b8; }
         .note-tool-btn:hover { color: #fff; border-color: #00eaff; }
 
@@ -219,17 +217,24 @@
                         <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full"><h3 class="text-xs md:text-sm font-bold text-amber-500 font-system tracking-widest mb-4 flex items-center gap-2"><i class="fa-solid fa-crown"></i> DIRECTIVES</h3><div id="quest-input-container" class="flex gap-2 mb-4 w-full"><input type="text" id="q-input" class="w-full bg-black border border-[#333] p-2 text-white text-xs outline-none font-mono" placeholder="Set objective..."><button onclick="addDailyQuest()" class="bg-amber-900/20 border border-amber-500 text-amber-500 px-3 py-2 text-xs font-bold transition"><i class="fa-solid fa-plus"></i></button></div><div id="quest-list-container" class="space-y-2 w-full"></div></div>
                         
                         <div class="bg-[#0a0a0a] border border-[#333] p-4 md:p-6 w-full">
-                            <h3 class="text-xs md:text-sm font-bold text-purple-400 font-system tracking-widest mb-4 border-b border-[#222] pb-2 flex items-center gap-2"><i class="fa-solid fa-stopwatch"></i> FOCUS MODE</h3>
+                            <h3 class="text-xs md:text-sm font-bold text-purple-400 font-system tracking-widest mb-4 border-b border-[#222] pb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-stopwatch"></i> FOCUS MODE
+                            </h3>
                             <div id="timer-setup" class="space-y-4 w-full">
                                 <div><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Objective</label><input type="text" id="t-name" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono" placeholder="e.g. Code Review"></div>
                                 <div class="grid grid-cols-2 gap-3 w-full">
                                     <div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Cat</label><select id="t-category" class="w-full bg-black border border-[#333] p-3 text-slate-300 text-xs outline-none font-mono"><option value="Study">Study</option><option value="Work">Work</option><option value="Health">Health</option></select></div>
-                                    <div class="w-full"><label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Time (Min)</label><input type="number" id="t-duration" value="25" min="1" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono"></div>
+                                    <div class="w-full">
+                                        <label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Time (Min)</label>
+                                        <input type="number" id="t-duration" value="25" min="1" class="w-full bg-black border border-[#333] p-3 text-white text-xs outline-none font-mono">
+                                    </div>
                                 </div>
                                 <button onclick="startTimer()" class="w-full border border-purple-500 bg-purple-900/20 text-purple-400 py-3 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest transition mt-2">QUEST START!</button>
                             </div>
                             <div id="timer-active" class="hidden flex-col items-center justify-center py-2 w-full">
-                                <p id="t-active-name" class="text-[10px] text-slate-400 font-mono text-center uppercase tracking-widest mb-4 border border-[#333] bg-[#111] px-4 py-1 w-full truncate">[ Task Name ]</p><div id="t-display" class="text-5xl md:text-6xl font-system font-bold mb-6 timer-active-anim">25:00</div><button onclick="abortTimer()" class="text-red-500 text-[10px] md:text-xs font-mono uppercase tracking-widest transition">[ ABORT ]</button>
+                                <p id="t-active-name" class="text-[10px] text-slate-400 font-mono text-center uppercase tracking-widest mb-4 border border-[#333] bg-[#111] px-4 py-1 w-full truncate">[ Task Name ]</p>
+                                <div id="t-display" class="text-5xl md:text-6xl font-system font-bold mb-6 timer-active-anim">25:00</div>
+                                <button onclick="abortTimer()" class="text-red-500 text-[10px] md:text-xs font-mono uppercase tracking-widest transition">[ ABORT ]</button>
                             </div>
                         </div>
 
@@ -394,11 +399,11 @@
         // ==========================================
         // SUPABASE CONFIGURATION
         // ==========================================
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+        const SUPABASE_URL = 'https://zjtqmcgxhfndkvhrohym.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_7EXc2JwiEFlEnL1XNKYDeg_jentzBKd';
         
         let supabaseClient = null;
-        if(window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE') {
+        if(window.supabase && SUPABASE_URL !== 'https://zjtqmcgxhfndkvhrohym.supabase.co') {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         }
 
@@ -491,7 +496,73 @@
             achievements: [ { id: 'str_3', title: "Awakening (3 Days)", type: "streak", req: 3, xp: 150, done: false }, { id: 'str_7', title: "Focus Aura (7 Days)", type: "streak", req: 7, xp: 500, done: false } ]
         };
 
-        // --- NEW: ADVANCED NOTES LOGIC (IMAGE & PIN) ---
+        // --- NEW CLOUD STORAGE UPLOAD (SUPABASE BUCKET) ---
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            
+            if(!supabaseClient || !currentUser) {
+                return alert("SYSTEM: Hubungkan akun ke Cloud (Auth Gateway) terlebih dahulu untuk mengunggah gambar!");
+            }
+
+            showToast("COMPRESSING & UPLOADING...");
+            document.getElementById('btn-remove-image').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...'; 
+            document.getElementById('btn-remove-image').classList.remove('hidden', 'text-red-500');
+            document.getElementById('btn-remove-image').classList.add('text-blue-500'); 
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = async function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 800;
+                    let width = img.width; let height = img.height;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    canvas.toBlob(async (blob) => {
+                        const fileName = `${currentUser.id}/note_${Date.now()}.jpg`;
+                        
+                        const { data, error } = await supabaseClient.storage
+                            .from('system_assets')
+                            .upload(fileName, blob, { contentType: 'image/jpeg' });
+                            
+                        if(error) {
+                            alert("SYSTEM ERROR: Upload gagal. " + error.message);
+                            resetUploadButton(); return;
+                        }
+
+                        const { data: publicUrlData } = supabaseClient.storage.from('system_assets').getPublicUrl(fileName);
+                        const imageUrl = publicUrlData.publicUrl;
+
+                        document.getElementById('edit-note-image-preview').src = imageUrl;
+                        document.getElementById('edit-note-img-container').classList.remove('hidden');
+                        document.getElementById('edit-note-image-data').value = imageUrl; 
+                        
+                        resetUploadButton(); showToast("IMAGE CLOUD SYNCED!");
+                    }, 'image/jpeg', 0.8);
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function resetUploadButton() {
+            const btnRemove = document.getElementById('btn-remove-image');
+            btnRemove.innerHTML = '<i class="fa-solid fa-trash"></i> Remove Image';
+            btnRemove.classList.replace('text-blue-500', 'text-red-500');
+        }
+
+        function removeNoteImage() {
+            document.getElementById('edit-note-img-container').classList.add('hidden');
+            document.getElementById('edit-note-image-data').value = '';
+            document.getElementById('edit-note-image-preview').src = '';
+            document.getElementById('note-image-input').value = ''; 
+            document.getElementById('btn-remove-image').classList.add('hidden');
+        }
+
         function togglePin() {
             const pinInput = document.getElementById('edit-note-pinned');
             const pinBtn = document.getElementById('btn-pin-note');
@@ -504,57 +575,10 @@
             }
         }
 
-        // Image Compression (Canvas to Base64) to prevent database bloat
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if(!file) return;
-            showToast("COMPRESSING IMAGE...");
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800; // Limit resolusi agar tidak lag
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-                    
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Convert to JPG format compressed (0.6 quality)
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-                    
-                    document.getElementById('edit-note-image-preview').src = dataUrl;
-                    document.getElementById('edit-note-img-container').classList.remove('hidden');
-                    document.getElementById('edit-note-image-data').value = dataUrl;
-                    document.getElementById('btn-remove-image').classList.remove('hidden');
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function removeNoteImage() {
-            document.getElementById('edit-note-img-container').classList.add('hidden');
-            document.getElementById('edit-note-image-data').value = '';
-            document.getElementById('edit-note-image-preview').src = '';
-            document.getElementById('note-image-input').value = ''; // Reset input file
-            document.getElementById('btn-remove-image').classList.add('hidden');
-        }
-
         function openNoteEditor(id = null) {
             document.getElementById('note-list-container').classList.replace('flex', 'hidden');
             document.getElementById('note-editor-container').classList.replace('hidden', 'flex');
             
-            // Reset state
             document.getElementById('edit-note-id').value = '';
             document.getElementById('edit-note-title').value = '';
             document.getElementById('edit-note-content').value = '';
@@ -615,20 +639,14 @@
                 state.notes.unshift({ id: Date.now(), title: title || 'Untitled', content, date, pinned, image });
             }
             
-            saveData(); 
-            renderNotes();
-            closeNoteEditor();
-            showToast("NOTE SAVED");
+            saveData(); renderNotes(); closeNoteEditor(); showToast("NOTE SAVED");
         }
 
         function deleteCurrentNote() {
             const id = document.getElementById('edit-note-id').value;
             if(confirm("Erase this record permanently?")) {
                 state.notes = state.notes.filter(n => n.id != id);
-                saveData(); 
-                renderNotes();
-                closeNoteEditor();
-                showToast("NOTE DELETED");
+                saveData(); renderNotes(); closeNoteEditor(); showToast("NOTE DELETED");
             }
         }
 
@@ -641,7 +659,6 @@
                 return;
             }
             
-            // Sort: Pinned first, then newest
             const sortedNotes = [...state.notes].sort((a, b) => {
                 if (a.pinned === b.pinned) return b.id - a.id; 
                 return a.pinned ? -1 : 1;
@@ -665,7 +682,6 @@
                     </div>`;
             });
         }
-
 
         // --- CHARACTER POPUP LOGIC ---
         function saveCharacters() {
@@ -782,7 +798,7 @@
 
         function buyFreezePotion() { if (state.gold >= 150) { state.gold -= 150; state.freezePotions++; addLog("Purchased Streak Freeze.", "success"); showToast("ITEM ACQUIRED"); saveData(); renderUI(); } else { alert("SYSTEM: Insufficient Gold."); } }
 
-        // --- CORE INITIALIZATION ---
+        // --- CORE EVALUATION ---
         let chartInstance = null; let dailyPieInstance = null; let categoryPieInstance = null; Chart.defaults.color = '#888'; Chart.defaults.font.family = 'JetBrains Mono';
 
         function bootSystem() {
